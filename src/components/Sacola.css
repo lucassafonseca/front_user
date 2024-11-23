@@ -1,0 +1,55 @@
+/* src/components/Sacola.css */
+.sacola {
+  padding: 20px;
+  max-width: 800px; /* Define uma largura máxima para centralizar */
+  margin: 0 auto; /* Centraliza o container da sacola */
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.cart-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.cart-item div {
+  flex: 1;
+}
+
+.cart-actions {
+  display: flex;
+  justify-content: center; /* Centraliza os botões */
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cart-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.continue-shopping {
+  background-color: #ffdd57;
+}
+
+.checkout {
+  background-color: #4caf50;
+  color: white;
+}
