@@ -1,0 +1,26 @@
+.finalizar-pedido {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.finalizar-pedido form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.finalizar-pedido label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.finalizar-pedido button {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

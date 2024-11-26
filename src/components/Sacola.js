@@ -1,10 +1,11 @@
-// src/components/Sacola.js
 import React, { useState, useEffect } from 'react';
 import './Sacola.css';
 import { getUserId } from '../utils/userUtils';
+import { useNavigate } from 'react-router-dom';
 
 function Sacola() {
   const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate(); // Hook para navegação
 
   // Carregar a sacola do backend
   useEffect(() => {
@@ -24,7 +25,7 @@ function Sacola() {
       body: JSON.stringify({ quantity: newQuantity, userId: getUserId() }),
     })
       .then((response) => response.json())
-      .then((updatedItem) => {
+      .then(() => {
         setCartItems((prevItems) =>
           prevItems.map((item) =>
             item.id === productId ? { ...item, quantity: newQuantity } : item
@@ -49,7 +50,15 @@ function Sacola() {
       .catch((error) => console.error('Erro ao remover item da sacola:', error));
   };
 
-  // Renderização do conteúdo da sacola
+  // Redirecionar para página de finalização
+  const handleCheckout = () => {
+    if (cartItems.length === 0) {
+      alert('Sua sacola está vazia! Adicione itens antes de finalizar a compra.');
+      return;
+    }
+    navigate('/finalizar-pedido');
+  };
+
   return (
     <div className="sacola">
       <h2>Minha Sacola</h2>
@@ -77,10 +86,10 @@ function Sacola() {
         )}
       </div>
       <div className="cart-actions">
-        <button className="continue-shopping" onClick={() => window.location.href = '/'}>
+        <button className="continue-shopping" onClick={() => navigate('/')}>
           Continuar Comprando
         </button>
-        <button className="checkout">
+        <button className="checkout" onClick={handleCheckout}>
           Finalizar Compra
         </button>
       </div>
