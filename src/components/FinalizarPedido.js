@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './FinalizarPedido.css';
 import { getUserId } from '../utils/userUtils';
 
-function FinalizarPedido() {
+function FinalizarPedido({ updateCart }) { // Recebendo prop para atualizar a sacola
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [isDelivery, setIsDelivery] = useState(false);
@@ -13,13 +13,12 @@ function FinalizarPedido() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    // Verificar campos obrigatórios
     if (!name || !phone || (isDelivery && !address) || !paymentMethod) {
       alert('Por favor, preencha todos os campos obrigatórios.');
       return;
     }
 
-    setIsSubmitting(true); // Evita cliques duplos
+    setIsSubmitting(true);
 
     const order = {
       userId: getUserId(),
@@ -29,7 +28,6 @@ function FinalizarPedido() {
       paymentMethod,
     };
 
-    // Enviar pedido para o backend
     fetch('http://seu-backend.com/api/pedidos', {
       method: 'POST',
       headers: {
@@ -43,9 +41,16 @@ function FinalizarPedido() {
         }
         return response.json();
       })
-      .then((data) => {
+      .then(() => {
+        // Limpar sacola no backend
+        return fetch(`http://seu-backend.com/api/sacola?userId=${getUserId()}`, {
+          method: 'DELETE',
+        });
+      })
+      .then(() => {
+        updateCart([]); // Atualizar a sacola no estado local para refletir a limpeza
         alert('Pedido realizado com sucesso!');
-        navigate('/pedidos'); // Redirecionar para a página de pedidos
+        navigate('/pedidos');
       })
       .catch((error) => {
         console.error('Erro ao finalizar o pedido:', error);
